@@ -1,0 +1,18 @@
+- args:
+    cascade: false
+    read_only: false
+    sql: CREATE EXTENSION IF NOT EXISTS pgcrypto;
+  type: run_sql
+- args:
+    cascade: false
+    read_only: false
+    sql: CREATE TABLE "public"."articles"("id" uuid NOT NULL DEFAULT gen_random_uuid(),
+      "title" text NOT NULL, "body" text NOT NULL, "date" date NOT NULL DEFAULT now(),
+      "featured" boolean NOT NULL DEFAULT false, "author_id" uuid NOT NULL, "excerpt"
+      text NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("author_id") REFERENCES "public"."authors"("id")
+      ON UPDATE restrict ON DELETE restrict);
+  type: run_sql
+- args:
+    name: articles
+    schema: public
+  type: add_existing_table_or_view
