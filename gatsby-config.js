@@ -1,14 +1,18 @@
+require("dotenv").config()
+const fetch = require("isomorphic-fetch")
+const { createHttpLink } = require("apollo-link-http")
+
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
+    title: `Yugabyte Blog`,
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: `Vladimir Novick`,
+      summary: `Yugabyte and Hasura sample blog`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
+    description: `A starter blog demonstrating what Gatsby can do with Yugabyte and Hasura.`,
     siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `VladimirNovick`,
     },
   },
   plugins: [
@@ -24,6 +28,24 @@ module.exports = {
       options: {
         path: `${__dirname}/content/assets`,
         name: `assets`,
+      },
+    },
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        typeName: "hasura",
+        fieldName: "blog",
+        createLink: () => {
+          return createHttpLink({
+            uri:
+              "http://localhost:8080/v1/graphql",
+            headers: {
+              "x-hasura-admin-secret":
+                process.env.GATSBY_HASURA_GRAPHQL_ADMIN_SECRET,
+            },
+            fetch,
+          })
+        },
       },
     },
     {
@@ -79,5 +101,6 @@ module.exports = {
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
+    "gatsby-plugin-chakra-ui"
   ],
 }
