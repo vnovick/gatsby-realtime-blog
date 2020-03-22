@@ -29,9 +29,11 @@ const SUBSCRIBE_TO_BLOG_POST_UPDATES = gql`
 `
 
 
-const Article = ({ initialData }) => {
+const Article = ({ initialData, isDynamic }) => {
 
   let post = initialData;
+  console.log(post)
+
   const { data: subData, loading, error } = useSubscription(
     SUBSCRIBE_TO_BLOG_POST_UPDATES,
     {
@@ -43,6 +45,11 @@ const Article = ({ initialData }) => {
 
   if (subData) {
       post = subData.articles[0]
+  }
+ 
+  
+  if (!post && isDynamic) {
+    return null
   }
 
   return (
@@ -68,9 +75,6 @@ const Article = ({ initialData }) => {
           marginBottom: rhythm(1),
         }}
       />
-      <footer>
-        <Author {...post.author} />
-      </footer>
     </article>
   )
 }

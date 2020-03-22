@@ -1,0 +1,6 @@
+- args:
+    cascade: false
+    read_only: false
+    sql: ALTER TABLE "public"."articles" ADD COLUMN "is_published" boolean NOT NULL
+      DEFAULT false;
+  type: run_sql

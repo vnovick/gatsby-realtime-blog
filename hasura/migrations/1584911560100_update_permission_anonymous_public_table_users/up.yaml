@@ -1,0 +1,20 @@
+- args:
+    role: anonymous
+    table:
+      name: users
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - email
+      - id
+      - name
+      computed_fields: []
+      filter: {}
+    role: anonymous
+    table:
+      name: users
+      schema: public
+  type: create_select_permission

@@ -8,9 +8,9 @@ import { PseudoBox, Heading, Text, SimpleGrid, Badge } from "@chakra-ui/core"
 import gql from "graphql-tag"
 import { useSubscription } from "@apollo/react-hooks"
 
-function Article({ id, title, excerpt, date, isNew, ...rest }) {
+function Article({ id, title, excerpt, date, isNew, isPublished, ...rest }) {
   return (
-    <Link style={{ boxShadow: `none` }} to={isNew ? '/' : id}>
+    <Link style={{ boxShadow: `none` }} to={isNew ? `/post/${id}` : id}>
       <PseudoBox
         p={5}
         width="100%"
@@ -25,20 +25,22 @@ function Article({ id, title, excerpt, date, isNew, ...rest }) {
         <Heading fontSize="xl">{title}</Heading>
         <Text mt={4}>{excerpt}</Text>
         <Text mt={2}>{date}</Text>
-        {isNew ? <Badge variantColor="red">New - not available</Badge> : null }
+        {isNew ? <Badge variantColor="red">Dynamic - no static page</Badge> : null }
+        {!isPublished ? <Badge variantColor="yellow">Draft</Badge> : null}
       </PseudoBox>
     </Link>
   )
 }
 
 const SUBSCRIBE_TO_BLOG_POST_UPDATES = gql`
-  subscription subscribeToBlogPostById($id: uuid) {
+  subscription subscribeToBlogPosts {
     articles {
       id
       title
       body
       date
       excerpt
+      is_published
     }
   }
 `
@@ -56,7 +58,6 @@ const BlogIndex = ({ data, location }) => {
   if (subData) {
     posts = subData.articles
   }
-
   
   return (
     <Layout location={location} title={siteTitle}>
@@ -72,6 +73,7 @@ const BlogIndex = ({ data, location }) => {
             date={post.date}
             excerpt={post.description || post.excerpt}
             isNew={!existingIds.includes(post.id)}
+            isPublished={post.is_published}
           />
         )
       })}

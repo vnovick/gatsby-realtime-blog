@@ -1,0 +1,15 @@
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - avatar_url
+      - bio
+      - user_id
+      computed_fields: []
+      filter: {}
+      limit: null
+    role: anonymous
+    table:
+      name: authors
+      schema: public
+  type: create_select_permission

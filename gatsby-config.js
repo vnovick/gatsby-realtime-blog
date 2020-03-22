@@ -39,10 +39,6 @@ module.exports = {
           return createHttpLink({
             uri:
               "http://localhost:8080/v1/graphql",
-            headers: {
-              "x-hasura-admin-secret":
-                process.env.GATSBY_HASURA_GRAPHQL_ADMIN_SECRET,
-            },
             fetch,
           })
         },

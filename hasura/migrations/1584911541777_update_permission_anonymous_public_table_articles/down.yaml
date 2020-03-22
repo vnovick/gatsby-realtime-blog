@@ -1,0 +1,25 @@
+- args:
+    role: anonymous
+    table:
+      name: articles
+      schema: public
+  type: drop_select_permission
+- args:
+    permission:
+      allow_aggregations: false
+      columns:
+      - author_id
+      - body
+      - date
+      - excerpt
+      - featured
+      - title
+      computed_fields: []
+      filter:
+        is_published:
+          _eq: true
+    role: anonymous
+    table:
+      name: articles
+      schema: public
+  type: create_select_permission
