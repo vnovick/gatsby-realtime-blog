@@ -37,7 +37,7 @@
     "gatsby-remark-smartypants": "^2.1.23",
     "gatsby-source-filesystem": "^2.1.56",
     "gatsby-source-graphql": "^2.1.35",
-    "gatsby-transformer-remark": "^2.6.59",
+    "gatsby-transformer-remark": "^5.25.1",
     "gatsby-transformer-sharp": "^2.3.19",
     "graphql-tag": "^2.10.3",
     "isomorphic-fetch": "^2.2.1",
